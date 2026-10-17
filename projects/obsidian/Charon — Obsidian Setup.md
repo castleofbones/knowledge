@@ -1,14 +1,18 @@
-**Status:** Operational  
-**Date:** 17 October 2026  
-**Host:** Charon (Windows 11)  
-**Vault:** `knowledge`
-
+---
+type: reference
+status: active
+created: 2026-10-17
+source:
+tags:
+  - obsidian
+  - knowledge-management
+---
+# Obsidian Setup
 ## Purpose
 
 Establish a local, Git-backed Obsidian knowledge base for capturing thoughts, maintaining technical documentation and organizing project knowledge.
 
 Charon is the reference implementation for future Windows clients, including Geonosis.
-
 ## Architecture
 
 - **Editor:** Obsidian
