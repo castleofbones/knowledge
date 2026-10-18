@@ -79,3 +79,11 @@ Deviations / follow-up owner:
 **Stop condition:** If a mount is missing or a running container appears attached to local underlay storage, do not run an automatic restart or import test; diagnose where in-flight writes may have landed first.
 
 The original system had a `media-recovery` timer to assist NFS and stopped-container recovery, but its presence does not validate the media import pipeline. Keep these as separate checks.
+
+## Confirmed 2026-10-18 baseline
+
+The running Compose project inventory reports `media running(6)`, `plex running(1)`, `sabnzbd running(1)`, and `sillytavern running(2)`. The `media` project uses `/data/compose/6/docker-compose.yml` and a named `media` bridge network. Expected media service host ports are Jellyfin 8096, SABnzbd-media **8081**, Sonarr 8989, Radarr 7878, Prowlarr 9696 and Seerr 5055.
+
+The supplied live `findmnt` confirms DS3 media on `10.10.0.252:/volume1/media` and DS2 main on `10.10.0.253:/volume1/main`. An inactive `mnt-ds3-media.automount` was observed alongside an active `mnt-ds3-media.mount`; investigate if it persists or affects recovery, but do not assume the share was unmounted.
+
+This is a **configuration/state snapshot**, not proof that every application-level integration test was rerun on 2026-10-18.
