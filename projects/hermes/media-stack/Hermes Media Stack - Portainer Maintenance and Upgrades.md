@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: active
+status: draft
 created: 2026-10-18
 source: ""
 tags:
@@ -10,7 +10,7 @@ tags:
   - raspberry-pi
 ---
 
-# Maintaining and Upgrading Hermes Docker Services with Portainer
+# Portainer CE on Hermes — Verified Maintenance Pattern
 
 ## Context
 
@@ -57,3 +57,16 @@ Before maintenance that restarts media containers, verify NAS mounts. A Docker r
 ## Evidence limits
 
 The historical upgrade succeeded, but exact command-line arguments, image digest and version change are not established in this note. Recover the authoritative deployment definition before repeating the operation.
+
+## Reconstruct a safe recreation command
+
+Before stopping Portainer, capture the current image, persistent data mount and Docker socket mount:
+
+```bash
+docker ps -a --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+docker inspect portainer --format '{{json .Mounts}}'
+docker inspect portainer --format '{{json .HostConfig.PortBindings}}'
+docker inspect portainer --format '{{json .HostConfig.RestartPolicy}}'
+```
+
+The name `portainer` must be replaced if the live container is named differently. A stop/remove/pull/recreate sequence is **not safe as an executable recipe** without the exact recreation command, data volume and socket mapping. Preserve those first and check the target image release is compatible with the installed Docker environment.
