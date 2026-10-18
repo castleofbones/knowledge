@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: draft
+status: active
 created: 2026-10-18
 source: ""
 tags:
@@ -60,3 +60,25 @@ docker inspect jellyfin --format '{{json .HostConfig.PortBindings}}'
 Do not assume that the observed audio transcoding proves hardware acceleration. Video copy and AAC audio conversion establish only that the tested playback pipeline worked.
 
 For NAS-dependent service validation see [[Hermes Media Stack - Synology NFS Storage]].
+
+## Confirmed Compose service (2026-10-18)
+
+```yaml
+jellyfin:
+  image: jellyfin/jellyfin:latest
+  container_name: jellyfin
+  user: "1000:100"
+  ports:
+    - "8096:8096"
+    - "7359:7359/udp"
+  volumes:
+    - /var/lib/media-stack/jellyfin/config:/config
+    - /var/lib/media-stack/jellyfin/cache:/cache
+    - /mnt/ds3/media/movies:/media/movies:ro
+    - /mnt/ds3/media/shows:/media/shows:ro
+  restart: unless-stopped
+  networks:
+    - media
+```
+
+This is the actual service stanza supplied by the user. The media binds are **read-only**, the service runs as UID 1000/GID 100, and the host exposes 8096/tcp and 7359/udp. The `media` bridge network is declared by the parent Compose file. Hardware acceleration devices were **not** configured in this stanza. Playback observations still need to be interpreted independently of the YAML.
