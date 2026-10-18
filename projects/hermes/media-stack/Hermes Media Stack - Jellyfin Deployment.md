@@ -27,7 +27,7 @@ docker logs --tail 100 jellyfin
 findmnt -T /mnt/ds3/media -o TARGET,SOURCE,FSTYPE
 ```
 
-Use `docker inspect` to determine the **actual container-side library paths**, user identity, persistent configuration directory, and networking. These details were not fully preserved in the accessible deployment history.
+The supplied Compose definition now establishes the container-side library paths, user identity, persistent configuration directories and network. Use `docker inspect` to confirm the currently running container matches the declared service.
 
 ## Playback verification
 
@@ -44,7 +44,7 @@ After NFS interruption, a running container may retain a stale mount namespace e
 
 ## Evidence gaps
 
-The exact Compose service definition, Jellyfin library names, container path mappings, hardware acceleration settings, and persistent configuration path were not recovered. They should be exported from the live deployment before this note is used as a clean-install runbook.
+The exact Compose service and container paths are now documented below. Jellyfin's application-level library names and currently deployed image digest remain unverified. The supplied service defines no hardware acceleration device mapping.
 
 ## Deployment reconstruction worksheet
 
