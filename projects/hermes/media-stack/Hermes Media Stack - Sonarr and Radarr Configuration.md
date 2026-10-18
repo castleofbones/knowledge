@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: active
+status: draft
 created: 2026-10-18
 source: ""
 tags:
@@ -60,3 +60,17 @@ Do not infer exact container root-folder paths from host paths; Docker bind dest
 ## Outcome
 
 Both applications were populated, Prowlarr was linked, and download-client connection tests passed. The record supports operational integration, not a complete clean-install recipe.
+
+## Inspect actual paths and import configuration
+
+```bash
+docker inspect sonarr --format '{{json .Mounts}}'
+docker inspect radarr --format '{{json .Mounts}}'
+docker inspect sabnzbd-media --format '{{json .Mounts}}'
+```
+
+Host-side DS3 library paths are established, but the **container-side root folders** must be obtained from Sonarr/Radarr and compared to those mount destinations. Record the non-secret download client endpoint, categories, completed-download settings and any Remote Path Mappings.
+
+A populated library is not an end-to-end import test: verify that a newly completed authorised download appears in the correct library and its file is visible to Jellyfin. An SSD-to-NAS handoff may cross filesystem boundaries, so don't assume hardlinks or atomic renames.
+
+See [[Hermes Media Stack - SABnzbd Download Pipeline]] and [[Hermes Media Stack - Prowlarr Integration]].
