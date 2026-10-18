@@ -32,7 +32,7 @@ Hermes runs Docker services on a Raspberry Pi 5 under Portainer CE. This article
 | Radarr | 7878/tcp | Application configuration under `/var/lib/media-stack/radarr` |
 | SABnzbd media | 8081/tcp host → 8080/tcp container | Separate SABnzbd project also exists |
 | Portainer | 9443/tcp | Management UI |
-| Plex | Separate running Compose project | Compose definition not yet supplied |
+| Plex | Separate running Compose project | Host networking; exact service definition recorded in [[Hermes Media Stack - Plex Deployment]] |
 | Prowlarr | 9696/tcp | Linked to Sonarr/Radarr |
 | Seerr | 5055/tcp | Confirmed in media Compose definition |
 
@@ -74,7 +74,7 @@ A successful host-side NFS mount does **not** prove that an already-running cont
 
 ## Outstanding evidence
 
-Recover the original Compose files and current Portainer stack exports to convert this from a documented reconstruction procedure into a fully reproducible, tested deployment runbook.
+The media and Plex Compose definitions have been supplied. The separate legacy `sabnzbd` and `sillytavern` projects are not reproduced here; exact application-level settings, image digests and a tested clean-room rebuild remain outstanding.
 
 ## Inspect Compose provenance, rather than guessing a manifest
 
@@ -177,7 +177,7 @@ networks:
 
 ### Actual project location and related stacks
 
-The supplied `docker compose ls --all` output reports the running `media` project with **six services** and configuration at `/data/compose/6/docker-compose.yml`. Separate projects exist for `plex` (`/data/compose/7/docker-compose.yml`), `sabnzbd` (`/data/compose/4/docker-compose.yml`), and `sillytavern` (`/data/compose/1/docker-compose.yml`). Those other Compose definitions have **not** been supplied; do not assume they share the `media` network.
+The supplied `docker compose ls --all` output reports the running `media` project with **six services** and configuration at `/data/compose/6/docker-compose.yml`. Separate projects exist for `plex` (`/data/compose/7/docker-compose.yml`), `sabnzbd` (`/data/compose/4/docker-compose.yml`), and `sillytavern` (`/data/compose/1/docker-compose.yml`). The separate Plex Compose definition has also been supplied and uses host networking. The legacy `sabnzbd` and `sillytavern` definitions have not been supplied; do not assume they share the `media` network.
 
 ### Actual host-to-container storage map
 
