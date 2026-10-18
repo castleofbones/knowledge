@@ -14,13 +14,13 @@ tags:
 
 ## What is established
 
-Plex was discussed as a service running alongside Jellyfin on Hermes and was included in later media-recovery monitoring. Both media servers depend on the NAS-backed library, but the accessible record does **not** preserve the original Plex Compose service, its networking mode, ports, image, volume targets or library configuration.
+Plex coexistence was mentioned in prior discussion, but the available build evidence does **not** establish that Plex is currently deployed on Hermes. The original Plex Compose service, networking, ports, image, bind mounts and application configuration were not recovered. No NAS dependency should be assumed until a running Plex service and its mounts have been inspected.
 
 This is therefore a **deployment evidence and validation note**, not a tested Plex installation guide.
 
 ## Coexistence design considerations
 
-Two media servers can read the same film and series files without sharing their application databases. Before editing the deployment, establish whether both have read-only media bind mounts, whether each uses its own persistent configuration, and how their advertised endpoints avoid conflicts. These are checks to perform, **not verified historical settings**.
+**If Plex is deployed**, two media servers can read the same film and series files without sharing their application databases. Before editing the deployment, establish whether both have read-only media bind mounts, whether each uses its own persistent configuration, and how their advertised endpoints avoid conflicts. These are checks to perform, **not verified historical settings**.
 
 ## Inspect the running service
 
@@ -30,13 +30,13 @@ docker inspect plex
 docker logs --tail 100 plex
 ```
 
-The `plex` container name is **not confirmed**. First obtain its real name with `docker ps -a` and substitute it in the commands.
+The `plex` container name is **not confirmed**, and neither is deployment. First obtain its real name (if any) with `docker ps -a`; run the subsequent inspect/log commands only if that container exists.
 
 Record the deployed image tag/digest, host network or bridge configuration, ports, environment, volumes, media paths and user IDs. Do not store Plex tokens or account credentials in the knowledge base.
 
 ## Validation checklist
 
-1. Confirm Plex is running and its UI is reachable.
+1. Determine whether Plex is deployed at all; only then confirm its UI is reachable.
 2. Inspect film and series library paths and map them to the expected DS3 NFS export.
 3. Confirm playback on a supported client.
 4. Verify that Plex and Jellyfin do not write into one another's metadata/configuration directories.
