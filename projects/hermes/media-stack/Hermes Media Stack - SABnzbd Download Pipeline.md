@@ -16,7 +16,7 @@ tags:
 
 The documented design intention was that **incomplete downloads and repair work stay on the Raspberry Pi SSD**, while completed downloads move to NAS storage. The exact final paths and an end-to-end import verification were not recovered, so this is a design decision rather than proof of the final data path. This avoids performing temporary high-churn work directly on the network share.
 
-The system also retained an existing, separate SABnzbd instance associated with DS2. The newer media-stack instance was named `sabnzbd-media` and exposed TCP 8080.
+The system also retained an existing, separate SABnzbd instance associated with DS2. The newer media-stack instance is named `sabnzbd-media`, published on **host TCP 8081** and listening on **container TCP 8080**.
 
 ## Known implementation facts
 
@@ -81,3 +81,28 @@ Check **Completed Download Handling**, categories, and any **Remote Path Mapping
 A same-filesystem atomic rename or hardlink is not generally available between the Pi SSD and a NAS filesystem. Determine whether the configured process copies, moves or imports by another mechanism before promising performance or cleanup behaviour.
 
 For download-client authentication troubleshooting, see [[Hermes Media Stack - Container Connectivity Troubleshooting]].
+
+## Verified Compose paths and ports (2026-10-18)
+
+```yaml
+sabnzbd-media:
+  image: lscr.io/linuxserver/sabnzbd:latest
+  container_name: sabnzbd-media
+  environment:
+    - PUID=1000
+    - PGID=100
+    - TZ=Europe/London
+  ports:
+    - "8081:8080"
+  volumes:
+    - /var/lib/media-stack/sabnzbd/config:/config
+    - /var/lib/media-stack/sabnzbd/incomplete:/incomplete-downloads
+    - /mnt/ds3/media/downloads:/data/downloads
+  restart: unless-stopped
+  networks:
+    - media
+```
+
+**Host port:** 8081. **Container port:** 8080. The Compose definition proves these mounts are exposed to SABnzbd, but does **not** by itself prove that the application has selected `/incomplete-downloads` and `/data/downloads` in its **Folders** settings. Confirm the configured paths and categories before claiming the entire pipeline has been tested.
+
+Sonarr and Radarr each bind `/mnt/ds3/media:/data`; thus the same DS3 download directory is visible to them as `/data/downloads` if configured accordingly. This layout supports consistent path references across the acquisition and import services.
