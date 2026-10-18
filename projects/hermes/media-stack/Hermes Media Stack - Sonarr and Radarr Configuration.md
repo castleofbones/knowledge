@@ -118,3 +118,7 @@ Both services bind DS3 `/mnt/ds3/media` to container `/data`, so their root fold
 ## Operational evidence — recent successful imports (user confirmation)
 
 The operator confirms that numerous new movies and television shows have been added successfully through the running stack recently. This is evidence of the download-to-library workflow working in normal operation, not merely passing an API connectivity test. A separate synthetic end-to-end download is therefore **not required to establish that the current pipeline works**. The exact SABnzbd category definitions and Seerr approval policy remain undocumented; their absence from this record does not imply a malfunction.
+
+## SABnzbd category destinations (verified in application UI)
+
+SABnzbd has a `movies` category writing to `/data/downloads/movies` and a `shows` category writing to `/data/downloads/shows`. These are the configured SABnzbd category destinations; the final library roots are Radarr `/data/movies/` and Sonarr `/data/shows/`. The screenshot alone does not independently prove which category string each download client sends, so do not conflate the existence of a category with verification of each client's category assignment.
