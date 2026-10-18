@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: active
+status: draft
 created: 2026-10-18
 source: ""
 tags:
@@ -10,22 +10,26 @@ tags:
   - indexers
 ---
 
-# Configuring Prowlarr Indexers and Sonarr/Radarr Integration
+# Prowlarr Integration with Sonarr and Radarr on Hermes
 
 ## Purpose
 
 Prowlarr centralises indexer management for the Hermes media automation stack. It was deployed and linked to both Sonarr and Radarr during the October 2026 build. The integrations were subsequently reported as passing tests.
 
-## Verified architecture
+## Application responsibilities
 
 ```text
            Prowlarr
            /      \
         Sonarr   Radarr
            \      /
-          SABnzbd-media
-               |
-         NAS media library
+       SABnzbd-media
+           |
+      completed files
+           |
+     Sonarr / Radarr import
+           |
+       NAS media library
 ```
 
 Prowlarr supplies indexer configuration to Sonarr/Radarr. Sonarr and Radarr independently manage download clients and library imports. Prowlarr is **not** the download client.
@@ -56,3 +60,9 @@ A passing service-to-service API test is stronger evidence than a UI that merely
 ## Outcome
 
 Prowlarr was added and linked to Sonarr/Radarr; the media automation tests passed. This article records the integration pattern and verification points, not a claim that every indexer or future search will work indefinitely.
+
+## Connection fields to preserve when available
+
+For each Prowlarr application integration, record its **non-secret** endpoint URL, sync profile, categories and test result. For each Sonarr/Radarr download client, separately record the host/port, category and tested status. API keys belong in the live secret/configuration store, not the vault.
+
+See [[Hermes Media Stack - SABnzbd Download Pipeline]] for the storage split and [[Hermes Media Stack - Sonarr and Radarr Configuration]] for root-folder/import ownership.
