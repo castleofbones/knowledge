@@ -93,3 +93,9 @@ The user supplied the actual six-service `media` Compose definition. All six ser
 Portainer's Compose project inventory also confirms separate running `plex` and `sabnzbd` projects, plus `sillytavern`. These are **not** part of the six-service `media` Compose project.
 
 See [[Hermes Media Stack - Docker Compose and Portainer]] for the supplied Compose definition and bind-mount table.
+
+## Verified application-level integration snapshot (2026-10-18)
+
+A sanitised read-only extraction of the live configuration confirms the complete configured path chain: SABnzbd stages at `/incomplete-downloads` (Pi SSD) and completes at `/data/downloads` (DS3); Sonarr's root is `/data/shows/`, Radarr's root is `/data/movies/`, and both use `sabnzbd-media:8080` with SSL disabled and no remote path mappings. Prowlarr has the enabled `NzbPlanet` Newznab indexer and Sonarr/Radarr application integrations at `http://sonarr:8989` and `http://radarr:7878`. Seerr has default Sonarr and Radarr request destinations using the corresponding library roots, plus a Jellyfin server entry on port 8096.
+
+Sonarr/Radarr automatic renaming is disabled. SABnzbd category mapping, Seerr request/approval policy and a new end-to-end download/import test remain unverified; configured endpoints alone are not proof of current service health.
