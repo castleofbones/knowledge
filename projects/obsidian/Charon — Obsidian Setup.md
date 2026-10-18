@@ -7,7 +7,6 @@ tags:
   - obsidian
   - knowledge-management
 ---
-# Obsidian Setup
 ## Purpose
 
 Establish a local, Git-backed Obsidian knowledge base for capturing thoughts, maintaining technical documentation and organizing project knowledge.

@@ -11,7 +11,7 @@ tags:
   - photography
   - comfyui
 ---
-# Dark Cinematic Lighting
+## Overview
 
 Getting dark cinematic lighting in Krea 2 is primarily about controlling the relationship between light, shadow, contrast and exposure, rather than simply asking for a dark image.
 

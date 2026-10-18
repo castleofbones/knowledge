@@ -20,8 +20,6 @@ tags:
     
 
 ---
-# Camera Lenses and Depth of Field
-
 ## Overview
 
 Krea 2 can be guided using conventional photographic terminology, including focal length, aperture, focus distance and depth of field.
