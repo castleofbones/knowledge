@@ -38,7 +38,7 @@ The Pi and NAS devices are wired to a 1 Gbps LAN. Synology DS3 provides media an
 - `/mnt/ds3/sillytavern` — separate application data
 - `/mnt/ds2/main` — DS2 storage
 
-The authoritative export strings and NAS IP addresses must be verified from live mount configuration; they are intentionally **not** asserted here.
+The live `findmnt` and `/etc/fstab` evidence confirms DS3 media at `10.10.0.252:/volume1/media`, DS3 SillyTavern at `10.10.0.252:/volume1/sillytavern`, and DS2 main at `10.10.0.253:/volume1/main`.
 
 The media library includes `/mnt/ds3/media/movies` and `/mnt/ds3/media/shows`. Application configuration was also stored locally under `/var/lib/media-stack/` for several services.
 
@@ -47,7 +47,7 @@ The media library includes `/mnt/ds3/media/movies` and `/mnt/ds3/media/shows`. A
 1. Prowlarr manages indexers and propagates them to Sonarr/Radarr.
 2. Sonarr and Radarr manage requested series and films and communicate with SABnzbd.
 3. SABnzbd uses Pi SSD storage for incomplete work, with completed material destined for NAS storage.
-4. Jellyfin serves NAS media; a separate running Plex Compose project is confirmed, but its library configuration is not yet supplied.
+4. Jellyfin and Plex both read the DS3 movie and show libraries through read-only mounts; Plex uses a separate Compose project and host networking.
 
 The exact completed-download path mappings, category names and import strategy must be read from live service configuration before reproducing the deployment.
 
@@ -55,7 +55,7 @@ The exact completed-download path mappings, category names and import strategy m
 
 Jellyfin successfully played media on a TV; logs showed video stream copy and AAC audio transcoding. Sonarr, Radarr and Prowlarr integrations were tested after initial API/hostname issues. A later power outage exposed the dependency of running containers on healthy NFS mounts.
 
-**Not established by available history:** a canonical end-to-end Compose stack, complete network definitions, current image digests, current Seerr configuration, or a tested clean-room rebuild. Preserve these as verification tasks rather than treating the diagram as an installation manifest.
+**Still not established:** current image digests, application-level category/indexer/request settings, or a tested clean-room rebuild. The six-service media Compose stack, NFS sources and separate Plex Compose service have now been supplied. Preserve these as verification tasks rather than treating the diagram as an installation manifest.
 
 ## Dependency boundaries and ownership
 
