@@ -98,4 +98,8 @@ See [[Hermes Media Stack - Docker Compose and Portainer]] for the supplied Compo
 
 A sanitised read-only extraction of the live configuration confirms the complete configured path chain: SABnzbd stages at `/incomplete-downloads` (Pi SSD) and completes at `/data/downloads` (DS3); Sonarr's root is `/data/shows/`, Radarr's root is `/data/movies/`, and both use `sabnzbd-media:8080` with SSL disabled and no remote path mappings. Prowlarr has the enabled `NzbPlanet` Newznab indexer and Sonarr/Radarr application integrations at `http://sonarr:8989` and `http://radarr:7878`. Seerr has default Sonarr and Radarr request destinations using the corresponding library roots, plus a Jellyfin server entry on port 8096.
 
-Sonarr/Radarr automatic renaming is disabled. SABnzbd category mapping, Seerr request/approval policy and a new end-to-end download/import test remain unverified; configured endpoints alone are not proof of current service health.
+Sonarr/Radarr automatic renaming is disabled. SABnzbd category mapping, Seerr request/approval policy remain undocumented; configured endpoints alone are not proof of current service health.
+
+## Operational evidence — recent successful imports (user confirmation)
+
+The operator confirms that numerous new movies and television shows have been added successfully through the running stack recently. This is evidence of the download-to-library workflow working in normal operation, not merely passing an API connectivity test. A separate synthetic end-to-end download is therefore **not required to establish that the current pipeline works**. The exact SABnzbd category definitions and Seerr approval policy remain undocumented; their absence from this record does not imply a malfunction.
