@@ -47,3 +47,24 @@ A healthy Docker container can still reference an underlying local directory if 
 ## Expected result
 
 After the recorded SABnzbd key and hostname corrections, Sonarr/Radarr tests passed. Future incidents should be classified by layer—DNS, TCP, HTTP authentication, application configuration or storage—before attempting fixes.
+
+## Inspect mount namespaces for the separate storage failure
+
+```bash
+docker inspect jellyfin --format '{{json .Mounts}}'
+pid=$(docker inspect -f '{{.State.Pid}}' jellyfin)
+test "$pid" -gt 0 && sudo findmnt -N "$pid" -o TARGET,SOURCE,FSTYPE
+```
+
+These commands inspect metadata and mounts without restarting services. Compare the expected bind destination to the host's current NFS filesystem. They do not replace checking for files stranded on local underlay paths before attempting recovery. See [[Hermes Media Stack - Synology NFS Storage]].
+
+## Quick error classification
+
+| Observation | Likely layer | Next check |
+| --- | --- | --- |
+| DNS lookup fails | Name resolution/network | Same-network container DNS and aliases |
+| Connection refused | Listener/port/network | Service status and bound port |
+| HTTP 403 | HTTP application auth/allowlist | API key and permitted hostname |
+| API passes, media absent | Library path/storage | Bind sources, container namespace, import paths |
+
+These are diagnostic categories, not exclusive diagnoses.
