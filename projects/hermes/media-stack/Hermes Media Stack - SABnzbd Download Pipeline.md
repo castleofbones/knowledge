@@ -14,7 +14,7 @@ tags:
 
 ## Architectural decision
 
-The documented design intention was that **incomplete downloads and repair work stay on the Raspberry Pi SSD**, while completed downloads move to NAS storage. The Docker bind paths have now been recovered: incomplete staging is mapped from the Pi SSD, and `/data/downloads` maps to DS3. The actual SABnzbd **Folders** selections and end-to-end import behaviour still require application-level confirmation. This avoids performing temporary high-churn work directly on the network share.
+The documented design intention was that **incomplete downloads and repair work stay on the Raspberry Pi SSD**, while completed downloads move to NAS storage. The Docker bind paths have now been recovered: incomplete staging is mapped from the Pi SSD, and `/data/downloads` maps to DS3. The SABnzbd **Folders** selections are now confirmed from its live INI; end-to-end import behaviour still requires confirmation. This avoids performing temporary high-churn work directly on the network share.
 
 The system also retained an existing, separate SABnzbd instance associated with DS2. The newer media-stack instance is named `sabnzbd-media`, published on **host TCP 8081** and listening on **container TCP 8080**.
 
@@ -106,3 +106,11 @@ sabnzbd-media:
 **Host port:** 8081. **Container port:** 8080. The Compose definition proves these mounts are exposed to SABnzbd, but does **not** by itself prove that the application has selected `/incomplete-downloads` and `/data/downloads` in its **Folders** settings. Confirm the configured paths and categories before claiming the entire pipeline has been tested.
 
 Sonarr and Radarr each bind `/mnt/ds3/media:/data`; thus the same DS3 download directory is visible to them as `/data/downloads` if configured accordingly. This layout supports consistent path references across the acquisition and import services.
+
+## Verified application settings (2026-10-18)
+
+The live `sabnzbd.ini` was read without exporting credentials. Its `[misc]` settings confirm `download_dir=/incomplete-downloads`, `complete_dir=/data/downloads`, `host=::`, `port=8080`, `direct_unpack=1`, and `host_whitelist=25cb1bec7b3d, sabnzbd-media`. The allowlist value is a recorded snapshot; the first entry may change when a container is recreated.
+
+Together with the verified Compose binds, incomplete downloads use `/var/lib/media-stack/sabnzbd/incomplete` on the Pi and completed downloads use `/mnt/ds3/media/downloads` on DS3. Sonarr and Radarr both see completed downloads at `/data/downloads`.
+
+**Category verification remains open:** the extraction returned an empty category object, but searched only for INI section names starting with `category:`. This does not establish that SABnzbd has no categories. The configured category names, any folder overrides, and end-to-end import/copy behaviour remain unverified.
