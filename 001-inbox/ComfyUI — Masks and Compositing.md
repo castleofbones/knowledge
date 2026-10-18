@@ -1,26 +1,16 @@
 ---
-
-type: reference  
-status: active  
-created: 2026-10-18  
-source:  
+type: reference
+status: active
+created: 2026-10-18
+source:
 tags:
-
-- comfyui
-    
-- image-generation
-    
-- diffusion
-    
-- img2img
-    
-- inpainting
-    
-- denoise
-    
-- krea-2
-    
-
+  - comfyui
+  - image-generation
+  - diffusion
+  - img2img
+  - inpainting
+  - denoise
+  - krea-2
 ---
 > [!abstract] Overview  
 > **Image-to-image (img2img)** and **inpainting** both use an existing image as the starting point for diffusion. The fundamental difference is how much of the image is eligible for modification.
@@ -404,7 +394,7 @@ By supplying the original mask to the final composite, we controlled the visible
 > 
 > This separation provides greater control over the final output.
 
-See [[ComfyUI — Masks and Compositing]] for a more detailed treatment.
+See the masking and compositing sections below for a more detailed treatment.
 
 ## 8. Integrating Inpainting Into the Main Workflow
 
@@ -591,9 +581,10 @@ This is a conceptual decision guide. The best implementation may differ dependin
 
 ## Related Notes
 
-- [[ComfyUI — Understanding Latent Space]]
+- [[ComfyUI — Noise Seeds and Reproducibility]]
     
-- [[ComfyUI — Masks and Compositing]]
+
+- [[ComfyUI — Understanding Latent Space]]
     
 - [[ComfyUI — Automated Detailing]]
     

@@ -1,24 +1,15 @@
 ---
-
-type: reference  
-status: active  
-created: 2026-10-18  
-source:  
+type: reference
+status: active
+created: 2026-10-18
+source:
 tags:
-
-- comfyui
-    
-- image-generation
-    
-- diffusion
-    
-- latent-space
-    
-- vae
-    
-- krea-2
-    
-
+  - comfyui
+  - image-generation
+  - diffusion
+  - latent-space
+  - vae
+  - krea-2
 ---
 > [!abstract] Overview  
 > ComfyUI image-generation workflows operate with two fundamentally different representations of an image: **pixel images** and **latent representations**. Understanding the distinction explains why samplers, VAE encoders, VAE decoders, inpainting and image-to-image generation work the way they do.
@@ -386,6 +377,9 @@ No. Inpainting generates or modifies content; compositing combines pixel images 
 ---
 
 ## Related Notes
+
+- [[ComfyUI — Noise Seeds and Reproducibility]]
+    
 
 - [[ComfyUI — Masks and Compositing]]
     

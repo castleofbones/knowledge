@@ -1,28 +1,17 @@
 ---
-
-type: reference  
-status: active  
-created: 2026-10-18  
-source: ""  
+type: reference
+status: active
+created: 2026-10-18
+source: ""
 tags:
-
-- comfyui
-    
-- image-generation
-    
-- subgraphs
-    
-- workflow-architecture
-    
-- modular-design
-    
-- reusable-components
-    
-- debugging
-    
-- krea-2
-    
-
+  - comfyui
+  - image-generation
+  - subgraphs
+  - workflow-architecture
+  - modular-design
+  - reusable-components
+  - debugging
+  - krea-2
 ---
 > [!abstract] Overview  
 > Subgraphs allow complex ComfyUI workflows to be organised into reusable components with defined inputs and outputs.

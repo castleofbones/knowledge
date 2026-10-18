@@ -1,32 +1,19 @@
 ---
-
-type: reference  
-status: active  
-created: 2026-10-18  
-source:  
+type: reference
+status: active
+created: 2026-10-18
+source:
 tags:
-
-- comfyui
-    
-- krea-2
-    
-- image-generation
-    
-- workflow-architecture
-    
-- subgraphs
-    
-- lora
-    
-- sampling
-    
-- inpainting
-    
-- detailing
-    
-- reproducibility
-    
-
+  - comfyui
+  - krea-2
+  - image-generation
+  - workflow-architecture
+  - subgraphs
+  - lora
+  - sampling
+  - inpainting
+  - detailing
+  - reproducibility
 ---
 > [!abstract] Overview  
 > This article documents the modular Krea 2 image-generation workflow developed through practical experimentation in ComfyUI Desktop.

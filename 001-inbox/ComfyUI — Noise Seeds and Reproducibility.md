@@ -1,22 +1,14 @@
 ---
-
-type: reference  
-status: active  
-created: 2026-10-18  
-source: ""  
+type: reference
+status: active
+created: 2026-10-18
+source: ""
 tags:
-
-- comfyui
-    
-- diffusion-models
-    
-- noise-seeds
-    
-- latent-space
-    
-- reproducibility
-    
-
+  - comfyui
+  - diffusion-models
+  - noise-seeds
+  - latent-space
+  - reproducibility
 ---
 ## Overview
 
@@ -407,3 +399,14 @@ For reproducibility, preserve the complete workflow and relevant model versions.
 The central principle is:
 
 > **The seed establishes the starting conditions; the diffusion pipeline determines the journey and the final image.**
+
+---
+
+## Related Notes
+
+- [[ComfyUI — Understanding Latent Space]] — Latent representations, VAE boundaries and dimension compatibility.
+- [[Krea 2 — Practical Workflow Architecture]] — Recording and controlling settings across the generation pipeline.
+- [[Krea 2 — Prompt Engineering]] — Fixed-seed comparisons when refining conditioning.
+- [[ComfyUI — Masks and Compositing]] — Comparing localised regeneration and image-to-image changes.
+- [[ComfyUI — Automated Detailing]] — Seeds and sampling settings in a separate refinement stage.
+- [[ComfyUI — Subgraph Architecture]] — Exposing seed and sampling controls through reusable interfaces.

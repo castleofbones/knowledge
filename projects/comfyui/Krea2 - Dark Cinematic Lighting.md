@@ -4,7 +4,7 @@ status: active
 created: 2026-10-17
 source:
 tags:
-  - krea2
+  - krea-2
   - lighting
   - cinematic
   - image-generation
