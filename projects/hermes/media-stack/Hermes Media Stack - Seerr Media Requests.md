@@ -56,7 +56,7 @@ Verify network reachability from another LAN device, then test authorised reques
 
 ## Outstanding work
 
-The current `media` Compose definition confirms Seerr. Its actual media-server/request integrations and whether a previous Overseerr instance was migrated remain to be verified through the application UI.
+The current `media` Compose definition confirms Seerr. Its non-secret media-server/request destinations are now verified below; request policy and any historical Overseerr migration remain unverified.
 
 ## Current confirmed Seerr Compose service (2026-10-18)
 
@@ -88,3 +88,16 @@ seerr:
 ```
 
 The service joins the named `media` bridge network, exposes TCP 5055, persists application data under `/var/lib/media-stack/seerr/config`, and includes an HTTP health check plus `no-new-privileges` and dropped Linux capabilities. The Compose definition establishes deployment intent and structure; it does not independently establish that a particular request/approval workflow passed an end-to-end test.
+
+## Verified live request integrations (2026-10-18)
+
+The following non-secret settings were extracted from Seerr's persistent `settings.json`:
+
+| Service | Recorded configuration |
+| --- | --- |
+| Jellyfin | Name `jellyfin`, port `8096`, SSL disabled |
+| Plex | Empty name, port `32400`, SSL disabled; **not evidence of a functioning Plex integration** |
+| Sonarr | Name `Sonarr`, host `sonarr`, port `8989`, SSL disabled, default server, profile ID `6`, root `/data/shows` |
+| Radarr | Name `Radarr`, host `radarr`, port `7878`, SSL disabled, default server, profile ID `6`, root `/data/movies` |
+
+The `main` section yielded no fields under the extraction allowlist; this is not evidence that Seerr has no main settings. These values establish configured request destinations, **not** approval rules, automatic-request policy, or successful end-to-end requests. The historical Overseerr migration remains unverified.
