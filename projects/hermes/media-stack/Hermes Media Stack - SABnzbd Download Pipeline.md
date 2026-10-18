@@ -14,7 +14,7 @@ tags:
 
 ## Architectural decision
 
-The documented design intention was that **incomplete downloads and repair work stay on the Raspberry Pi SSD**, while completed downloads move to NAS storage. The exact final paths and an end-to-end import verification were not recovered, so this is a design decision rather than proof of the final data path. This avoids performing temporary high-churn work directly on the network share.
+The documented design intention was that **incomplete downloads and repair work stay on the Raspberry Pi SSD**, while completed downloads move to NAS storage. The Docker bind paths have now been recovered: incomplete staging is mapped from the Pi SSD, and `/data/downloads` maps to DS3. The actual SABnzbd **Folders** selections and end-to-end import behaviour still require application-level confirmation. This avoids performing temporary high-churn work directly on the network share.
 
 The system also retained an existing, separate SABnzbd instance associated with DS2. The newer media-stack instance is named `sabnzbd-media`, published on **host TCP 8081** and listening on **container TCP 8080**.
 
@@ -27,7 +27,7 @@ The system also retained an existing, separate SABnzbd instance associated with 
 - Sonarr and Radarr connect to the media SABnzbd instance through its API.
 - During integration, the request from Sonarr initially received HTTP 403. Correcting the API key and SABnzbd hostname allowance resolved the issue.
 
-The exact SABnzbd incomplete/completed path values, categories, Docker volume targets, and final import semantics were not preserved; they must be read from the deployed configuration.
+The Docker volume targets are now documented below. The exact SABnzbd application folder selections, categories and final import semantics must still be read from the deployed configuration.
 
 ## Revalidate the pipeline
 
