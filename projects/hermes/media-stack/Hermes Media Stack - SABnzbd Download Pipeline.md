@@ -118,3 +118,15 @@ Together with the verified Compose binds, incomplete downloads use `/var/lib/med
 ## Operational evidence — recent successful imports (user confirmation)
 
 The operator confirms that numerous new movies and television shows have been added successfully through the running stack recently. This is evidence of the download-to-library workflow working in normal operation, not merely passing an API connectivity test. A separate synthetic end-to-end download is therefore **not required to establish that the current pipeline works**. The exact SABnzbd category definitions and Seerr approval policy remain undocumented; their absence from this record does not imply a malfunction.
+
+## Confirmed SABnzbd categories (operator UI, 2026-10-18)
+
+The live SABnzbd Categories UI shows that relative paths are based on `/data/downloads`:
+
+| Category | Relative folder | Resolved completed-download folder | Priority | Processing |
+| --- | --- | --- | --- | --- |
+| Default | Blank | `/data/downloads` | Normal | `+Delete` |
+| `movies` | `movies` | `/data/downloads/movies` | Default | Default |
+| `shows` | `shows` | `/data/downloads/shows` | Default | Default |
+
+The screenshot shows no per-category script or indexer category/group restriction. These are **download staging destinations**, not the final Radarr/Sonarr library roots (`/data/movies` and `/data/shows`). The previous extraction script only searched for sections named `category:...` and therefore missed entries nested under SABnzbd's `[categories]` section. Its empty `categories` result was a parser limitation, not evidence that no categories existed.
