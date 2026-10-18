@@ -42,7 +42,7 @@ systemctl --failed
 journalctl -b --no-pager | grep -i nfs
 ```
 
-The exact `/etc/fstab` options and Synology export permissions were not preserved in the accessible history. Inspect them on the live system rather than copying generic mount options as if verified.
+The relevant `/etc/fstab` options have now been supplied and are reproduced below. Synology-side export permissions were not supplied and must not be invented.
 
 ## Permissions and bind mounts
 
@@ -99,4 +99,4 @@ The relevant supplied `/etc/fstab` entries are:
 
 The live mount output reports NFSv4.0 with `hard`, `timeo=600`, `retrans=2`, TCP and `sec=sys`. Other `/etc/fstab` entries cover DS3 `pishare`, DS2 USB exports and a CIFS USB share; these are outside the media project's critical path.
 
-**Observed state requiring separate diagnosis:** `mnt-ds3-media.mount` was **active/mounted** while `mnt-ds3-media.automount` was **inactive/dead**. A separate `mnt-ds2-usb3.mount` was failed. Do not equate these states with a broken media share: the DS3 media NFS filesystem was mounted at capture time. Check whether the automount unit's state is expected after mount activation before changing it.
+**Operational observation:** Although the captured systemd listing showed `mnt-ds3-media.automount` as inactive, `mnt-ds3-media.mount` was active and the user subsequently confirmed interactive access to populated `downloads`, `movies` and `shows` directories. The media mount is considered operational; no automount repair is proposed on this evidence.
