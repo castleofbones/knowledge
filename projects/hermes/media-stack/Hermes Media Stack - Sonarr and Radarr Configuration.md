@@ -74,3 +74,22 @@ Host-side DS3 library paths are established, but the **container-side root folde
 A populated library is not an end-to-end import test: verify that a newly completed authorised download appears in the correct library and its file is visible to Jellyfin. An SSD-to-NAS handoff may cross filesystem boundaries, so don't assume hardlinks or atomic renames.
 
 See [[Hermes Media Stack - SABnzbd Download Pipeline]] and [[Hermes Media Stack - Prowlarr Integration]].
+
+## Confirmed Docker mounts (2026-10-18)
+
+Both services use `lscr.io/linuxserver/*:latest`, UID 1000, GID 100 and `TZ=Europe/London`:
+
+```yaml
+sonarr:
+  ports: ["8989:8989"]
+  volumes:
+    - /var/lib/media-stack/sonarr/config:/config
+    - /mnt/ds3/media:/data
+radarr:
+  ports: ["7878:7878"]
+  volumes:
+    - /var/lib/media-stack/radarr/config:/config
+    - /mnt/ds3/media:/data
+```
+
+The YAML excerpt intentionally shows the relevant mappings only, **not** full standalone service definitions. The complete deployment is in [[Hermes Media Stack - Docker Compose and Portainer]]. Inside these containers, the NAS-backed paths are available at `/data/movies`, `/data/shows`, and `/data/downloads`. The actual root-folder and completed-download configuration in each application's UI is still a separate verification step.
