@@ -114,3 +114,7 @@ The live `sabnzbd.ini` was read without exporting credentials. Its `[misc]` sett
 Together with the verified Compose binds, incomplete downloads use `/var/lib/media-stack/sabnzbd/incomplete` on the Pi and completed downloads use `/mnt/ds3/media/downloads` on DS3. Sonarr and Radarr both see completed downloads at `/data/downloads`.
 
 **Category verification remains open:** the extraction returned an empty category object, but searched only for INI section names starting with `category:`. This does not establish that SABnzbd has no categories. The configured category names, any folder overrides, and end-to-end import/copy behaviour remain unverified.
+
+## Operational evidence — recent successful imports (user confirmation)
+
+The operator confirms that numerous new movies and television shows have been added successfully through the running stack recently. This is evidence of the download-to-library workflow working in normal operation, not merely passing an API connectivity test. A separate synthetic end-to-end download is therefore **not required to establish that the current pipeline works**. The exact SABnzbd category definitions and Seerr approval policy remain undocumented; their absence from this record does not imply a malfunction.
