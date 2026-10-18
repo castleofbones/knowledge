@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: active
+status: draft
 created: 2026-10-18
 source: ""
 tags:
@@ -14,13 +14,13 @@ tags:
 
 ## Implemented topology
 
-Hermes uses Synology NAS exports mounted on the Raspberry Pi host and then bind-mounted into Docker containers. The confirmed mounts from the later recovery configuration are:
+Hermes uses Synology NAS exports mounted on the Raspberry Pi host and then bind-mounted into Docker containers. The following host mount paths were discussed previously. The exact NFS export source addresses carried over from the initial draft were **not independently checked** against an original host configuration:
 
 | Host path | NFS export | Role |
 | --- | --- | --- |
-| `/mnt/ds3/media` | `10.10.0.252:/volume1/media` | Films and TV library |
-| `/mnt/ds3/sillytavern` | `10.10.0.252:/volume1/sillytavern` | Separate application data |
-| `/mnt/ds2/main` | `10.10.0.253:/volume1/main` | DS2 storage, including existing SABnzbd use |
+| `/mnt/ds3/media` | Verify from live mount | Films and TV library |
+| `/mnt/ds3/sillytavern` | Verify from live mount | Separate application data |
+| `/mnt/ds2/main` | Verify from live mount | DS2 storage, including existing SABnzbd use |
 
 The DS3 library used `/mnt/ds3/media/movies` and `/mnt/ds3/media/shows`. Both NAS and Pi were on the wired LAN.
 
@@ -32,7 +32,7 @@ findmnt -T /mnt/ds2/main -o TARGET,SOURCE,FSTYPE
 ls -ld /mnt/ds3/media/movies /mnt/ds3/media/shows
 ```
 
-Check that `SOURCE` is the expected NFS export, not the Pi's local filesystem. For automounted paths, access may trigger the mount; a directory existing on disk alone is not evidence that NFS is attached.
+Verify that `FSTYPE` is `nfs` or `nfs4` and that `SOURCE` matches the live mount unit or `/etc/fstab` entry—not the Pi's local filesystem. The earlier draft's numeric NAS IP addresses should not be copied without verification. For automounted paths, access may trigger the mount; a directory existing on disk alone is not evidence that NFS is attached.
 
 To inspect relevant systemd units:
 
@@ -63,4 +63,26 @@ Inspect the actual running container mounts, and do not automatically restart co
 - No unexpected files have accumulated on the Pi SSD underlay.
 - Recovery behaviour is documented for NFS loss.
 
-**Status:** The topology and failure behaviour are verified. A complete Synology GUI export-configuration walkthrough is not documented by the available implementation record.
+**Evidence status:** The host paths and failure mode are supported by earlier discussion; exact NAS export source strings and a full Synology GUI setup are not independently verified. A complete Synology GUI export-configuration walkthrough is not documented by the available implementation record.
+
+## Capture authoritative mount sources
+
+```bash
+grep -E 'nfs|/mnt/ds[23]' /etc/fstab
+findmnt -t nfs,nfs4 -o TARGET,SOURCE,FSTYPE,OPTIONS
+systemctl list-units --all --type=automount --type=mount
+```
+
+If the expected export is automounted, accessing its path may trigger the mount; distinguish the `.automount` unit from the NFS `.mount` unit.
+
+## Verify the running container's filesystem view
+
+```bash
+docker inspect jellyfin --format '{{json .Mounts}}'
+pid=$(docker inspect -f '{{.State.Pid}}' jellyfin)
+test "$pid" -gt 0 && sudo findmnt -N "$pid" -t nfs,nfs4 -o TARGET,SOURCE,FSTYPE
+```
+
+Cross-check namespace paths with the container's bind destinations. A healthy host mount does not guarantee that a container created during an NFS outage sees that mount. Investigate possible local-underlay writes before any forced restart.
+
+See [[Hermes Media Stack - Container Connectivity Troubleshooting]] and [[Hermes Media Stack - Operational Validation Runbook]].
