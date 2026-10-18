@@ -103,3 +103,7 @@ Sonarr/Radarr automatic renaming is disabled. SABnzbd category mapping, Seerr re
 ## Operational evidence — recent successful imports (user confirmation)
 
 The operator confirms that numerous new movies and television shows have been added successfully through the running stack recently. This is evidence of the download-to-library workflow working in normal operation, not merely passing an API connectivity test. A separate synthetic end-to-end download is therefore **not required to establish that the current pipeline works**. The exact SABnzbd category definitions and Seerr approval policy remain undocumented; their absence from this record does not imply a malfunction.
+
+## SABnzbd category destinations (operator UI confirmation)
+
+SABnzbd's `[categories]` configuration is visible in its live UI: default downloads use `/data/downloads`, category `movies` uses `/data/downloads/movies`, and category `shows` uses `/data/downloads/shows`. These completed-download folders are distinct from the final Radarr/Sonarr library roots. The earlier automated category extraction was incomplete because it searched the wrong INI section structure. The operator has also confirmed successful recent movie and TV imports in normal use.
