@@ -1,32 +1,19 @@
 ---
-
-type: reference  
-status: active  
-created: 2026-10-18  
-source:  
+type: reference
+status: active
+created: 2026-10-18
+source:
 tags:
-
-- comfyui
-    
-- image-generation
-    
-- automated-detailing
-    
-- face-detailer
-    
-- eye-detailer
-    
-- ultralytics
-    
-- yolo
-    
-- sam
-    
-- inpainting
-    
-- krea-2
-    
-
+  - comfyui
+  - image-generation
+  - automated-detailing
+  - face-detailer
+  - eye-detailer
+  - ultralytics
+  - yolo
+  - sam
+  - inpainting
+  - krea-2
 ---
 > [!abstract] Overview  
 > Automated detailing uses object detection, optional segmentation, and targeted diffusion processing to improve selected regions of a generated image.

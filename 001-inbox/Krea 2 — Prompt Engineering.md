@@ -1,30 +1,18 @@
 ---
-
-type: reference  
-status: active  
-created: 2026-10-18  
-source: ""  
+type: reference
+status: active
+created: 2026-10-18
+source: ""
 tags:
-
-- comfyui
-    
-- image-generation
-    
-- krea-2
-    
-- prompt-engineering
-    
-- danbooru
-    
-- natural-language
-    
-- illustrious
-    
-- character-design
-    
-- workflow
-    
-
+  - comfyui
+  - image-generation
+  - krea-2
+  - prompt-engineering
+  - danbooru
+  - natural-language
+  - illustrious
+  - character-design
+  - workflow
 ---
 > [!abstract] Overview  
 > Effective prompting is not simply about finding more descriptive words. It is about communicating a visual specification in a form the image-generation model can interpret.
