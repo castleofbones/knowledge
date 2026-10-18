@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: draft
+status: active
 created: 2026-10-18
 source: ""
 tags:
@@ -10,11 +10,11 @@ tags:
   - media-requests
 ---
 
-# Media Requests on Hermes — Historical Overseerr Configuration
+# Seerr on Hermes — Confirmed Deployment and Historical Overseerr Context
 
 ## Historical evidence and naming
 
-A December 2025 configuration supplied in conversation explicitly describes **Overseerr**, not a verified Seerr deployment. The proposed article title in the documentation plan used Seerr, but the accessible evidence does not establish whether or when a migration occurred.
+The user supplied a **current Seerr Compose service** on 2026-10-18. A December 2025 conversation also contained a historical Overseerr Compose example. Both facts are recorded, but the date and procedure of any migration between the two products are not established.
 
 The original user-supplied Compose excerpt was (retained as historical evidence, **not** an executable deployment template):
 
@@ -56,4 +56,35 @@ Verify network reachability from another LAN device, then test authorised reques
 
 ## Outstanding work
 
-Confirm the currently deployed product (Overseerr, Seerr or neither), its actual network mode and its media automation integrations. Until then, this note remains draft rather than claiming a completed Seerr build.
+The current `media` Compose definition confirms Seerr. Its actual media-server/request integrations and whether a previous Overseerr instance was migrated remain to be verified through the application UI.
+
+## Current confirmed Seerr Compose service (2026-10-18)
+
+```yaml
+seerr:
+  image: ghcr.io/seerr-team/seerr:latest
+  container_name: seerr
+  init: true
+  environment:
+    - TZ=Europe/London
+    - PORT=5055
+  ports:
+    - "5055:5055"
+  volumes:
+    - /var/lib/media-stack/seerr/config:/app/config
+  healthcheck:
+    test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1
+    start_period: 20s
+    timeout: 3s
+    interval: 15s
+    retries: 3
+  security_opt:
+    - no-new-privileges
+  cap_drop:
+    - ALL
+  restart: unless-stopped
+  networks:
+    - media
+```
+
+The service joins the named `media` bridge network, exposes TCP 5055, persists application data under `/var/lib/media-stack/seerr/config`, and includes an HTTP health check plus `no-new-privileges` and dropped Linux capabilities. The Compose definition establishes deployment intent and structure; it does not independently establish that a particular request/approval workflow passed an end-to-end test.
