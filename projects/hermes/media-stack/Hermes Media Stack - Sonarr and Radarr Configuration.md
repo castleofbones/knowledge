@@ -113,4 +113,8 @@ The naming templates are configured but **not currently used for automatic renam
 - Sonarr episode: `{Series Title} - S{season:00}E{episode:00} - {Episode Title} {Quality Full}`; season folder: `Season {season}`.
 - Radarr movie: `{Movie Title} ({Release Year}) {Quality Full}`; movie folder: `{Movie Title} ({Release Year})`.
 
-Both services bind DS3 `/mnt/ds3/media` to container `/data`, so their root folders and SABnzbd's completed-download location share the same container path namespace. Category names, additional download-client settings, quality-profile definitions and a fresh end-to-end import remain outside the extracted evidence.
+Both services bind DS3 `/mnt/ds3/media` to container `/data`, so their root folders and SABnzbd's completed-download location share the same container path namespace. Category names, additional download-client settings, quality-profile definitions and the precise category definitions remain outside the extracted evidence.
+
+## Operational evidence — recent successful imports (user confirmation)
+
+The operator confirms that numerous new movies and television shows have been added successfully through the running stack recently. This is evidence of the download-to-library workflow working in normal operation, not merely passing an API connectivity test. A separate synthetic end-to-end download is therefore **not required to establish that the current pipeline works**. The exact SABnzbd category definitions and Seerr approval policy remain undocumented; their absence from this record does not imply a malfunction.
