@@ -26,7 +26,7 @@ findmnt -T /mnt/ds2/main -o TARGET,SOURCE,FSTYPE
 ls -ld /mnt/ds3/media/movies /mnt/ds3/media/shows
 ```
 
-Expected DS3 media source: `10.10.0.252:/volume1/media`. Expected DS2 main source: `10.10.0.253:/volume1/main`. Do not continue to write-dependent service tests if the NAS mount is absent.
+Confirm each reported `SOURCE` matches the **live mount configuration**; the earlier draft's numeric export addresses have not been verified. Do not continue to write-dependent service tests if the NAS mount is absent.
 
 ## 2. Container inventory and health
 
@@ -60,3 +60,22 @@ The `media-recovery` systemd timer was later configured to run approximately onc
 ## Acceptance record
 
 Capture date, container image versions, NFS sources, application test outcomes, playback outcome and unresolved deviations. Do not mark this runbook fully verified until the complete sequence has been performed on the current stack.
+
+## Record results without storing secrets
+
+```text
+Date:
+Host/OS and Docker versions:
+Expected NFS mounts (from fstab/systemd):
+Actual host mount sources:
+Container mount-source checks:
+SABnzbd connection test:
+Prowlarr -> Sonarr/Radarr tests:
+Sonarr/Radarr import path checks:
+Jellyfin playback result:
+Deviations / follow-up owner:
+```
+
+**Stop condition:** If a mount is missing or a running container appears attached to local underlay storage, do not run an automatic restart or import test; diagnose where in-flight writes may have landed first.
+
+The original system had a `media-recovery` timer to assist NFS and stopped-container recovery, but its presence does not validate the media import pipeline. Keep these as separate checks.
