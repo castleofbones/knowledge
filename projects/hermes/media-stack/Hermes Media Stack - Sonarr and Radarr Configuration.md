@@ -55,7 +55,7 @@ Initially, poster artwork was missing despite libraries being populated. Connect
 
 ## Boundaries
 
-Do not infer exact container root-folder paths from host paths; Docker bind destinations must be read from the actual deployment. Quality profiles, naming formats, retention settings and categories are not available as verified values.
+Do not infer exact container root-folder paths from host paths; Docker bind destinations must be read from the actual deployment. Naming formats and completed-download removal are now verified below; quality-profile definitions and categories remain unverified.
 
 ## Outcome
 
@@ -93,3 +93,24 @@ radarr:
 ```
 
 The YAML excerpt intentionally shows the relevant mappings only, **not** full standalone service definitions. The complete deployment is in [[Hermes Media Stack - Docker Compose and Portainer]]. Inside these containers, the NAS-backed paths are available at `/data/movies`, `/data/shows`, and `/data/downloads`. The actual root-folder and completed-download configuration in each application's UI is still a separate verification step.
+
+## Verified application settings (2026-10-18)
+
+These values were extracted from consistent read-only snapshots of the live application SQLite databases, without exporting API keys.
+
+| Setting | Sonarr | Radarr |
+| --- | --- | --- |
+| Root folder | `/data/shows/` | `/data/movies/` |
+| Download client | `SABnzbd Media` (enabled) | `SABnzbd Media` (enabled) |
+| Download client endpoint | `sabnzbd-media:8080`, SSL disabled | `sabnzbd-media:8080`, SSL disabled |
+| Remove completed downloads | Enabled (`1`) | Enabled (`1`) |
+| Remote path mappings | None | None |
+| Synced indexer | `NzbPlanet (Prowlarr)` (Newznab, RSS enabled) | `NzbPlanet (Prowlarr)` (Newznab, RSS enabled) |
+| Automatic renaming | **Disabled** (`RenameEpisodes=0`) | **Disabled** (`RenameMovies=0`) |
+
+The naming templates are configured but **not currently used for automatic renaming**:
+
+- Sonarr episode: `{Series Title} - S{season:00}E{episode:00} - {Episode Title} {Quality Full}`; season folder: `Season {season}`.
+- Radarr movie: `{Movie Title} ({Release Year}) {Quality Full}`; movie folder: `{Movie Title} ({Release Year})`.
+
+Both services bind DS3 `/mnt/ds3/media` to container `/data`, so their root folders and SABnzbd's completed-download location share the same container path namespace. Category names, additional download-client settings, quality-profile definitions and a fresh end-to-end import remain outside the extracted evidence.
