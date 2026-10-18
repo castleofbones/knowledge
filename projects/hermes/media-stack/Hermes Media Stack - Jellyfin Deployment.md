@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: active
+status: draft
 created: 2026-10-18
 source: ""
 tags:
@@ -10,7 +10,7 @@ tags:
   - media-playback
 ---
 
-# Deploying and Configuring Jellyfin on Raspberry Pi 5
+# Jellyfin on Hermes — Verified Deployment and Playback
 
 ## Environment and observed result
 
@@ -45,3 +45,18 @@ After NFS interruption, a running container may retain a stale mount namespace e
 ## Evidence gaps
 
 The exact Compose service definition, Jellyfin library names, container path mappings, hardware acceleration settings, and persistent configuration path were not recovered. They should be exported from the live deployment before this note is used as a clean-install runbook.
+
+## Deployment reconstruction worksheet
+
+The **verified** baseline is the service on TCP 8096/UDP 7359 and successful playback. Before describing an exact redeployment, record the live values of image, network, configuration mount, cache mount, media-library bind destinations, user identity, and any device mappings:
+
+```bash
+docker inspect jellyfin --format 'Image={{.Config.Image}} User={{.Config.User}} Network={{.HostConfig.NetworkMode}}'
+docker inspect jellyfin --format '{{json .Mounts}}'
+docker inspect jellyfin --format '{{json .HostConfig.Devices}}'
+docker inspect jellyfin --format '{{json .HostConfig.PortBindings}}'
+```
+
+Do not assume that the observed audio transcoding proves hardware acceleration. Video copy and AAC audio conversion establish only that the tested playback pipeline worked.
+
+For NAS-dependent service validation see [[Hermes Media Stack - Synology NFS Storage]].
