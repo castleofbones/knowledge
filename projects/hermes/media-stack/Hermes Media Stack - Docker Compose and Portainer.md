@@ -1,6 +1,6 @@
 ---
 type: how-to
-status: draft
+status: active
 created: 2026-10-18
 source: ""
 tags:
@@ -14,7 +14,7 @@ tags:
 
 ## Scope
 
-Hermes runs Docker services on a Raspberry Pi 5 under Portainer CE. This article captures verified deployment conventions and a **reconstruction checklist**. The original complete Compose manifests were not recovered, so no invented production-ready YAML is provided.
+Hermes runs Docker services on a Raspberry Pi 5 under Portainer CE. This article captures verified deployment conventions and a **reconstruction checklist**. The `media` project's actual Compose definition was supplied on 2026-10-18 and is recorded below. Other projects' Compose definitions remain outstanding.
 
 ## Prerequisites
 
@@ -30,11 +30,11 @@ Hermes runs Docker services on a Raspberry Pi 5 under Portainer CE. This article
 | Jellyfin | 8096/tcp, 7359/udp | Healthy and playback verified |
 | Sonarr | 8989/tcp | Application configuration under `/var/lib/media-stack/sonarr` |
 | Radarr | 7878/tcp | Application configuration under `/var/lib/media-stack/radarr` |
-| SABnzbd media | 8080/tcp | Separate SABnzbd instance also existed |
+| SABnzbd media | 8081/tcp host → 8080/tcp container | Separate SABnzbd project also exists |
 | Portainer | 9443/tcp | Management UI |
-| Plex | Not recovered | Later included in recovery monitoring |
-| Prowlarr | Not recovered | Linked to Sonarr/Radarr |
-| Seerr | Not verified | Historical Overseerr configuration used port 5055 |
+| Plex | Separate running Compose project | Compose definition not yet supplied |
+| Prowlarr | 9696/tcp | Linked to Sonarr/Radarr |
+| Seerr | 5055/tcp | Confirmed in media Compose definition |
 
 Several media-stack directories used `uid=1000`, `gid=100`. Do not assume those IDs apply to every container; inspect the live definitions.
 
@@ -92,3 +92,102 @@ Absence of Compose labels may mean a service was created directly by Portainer o
 **Do not publish** raw `docker inspect` dumps containing tokens, passwords, endpoints or other secrets. Sanitise before committing to the vault.
 
 See [[Hermes Media Stack - Architecture and Deployment]] for component roles and [[Hermes Media Stack - Operational Validation Runbook]] for post-deploy acceptance.
+
+## Verified media stack Compose definition — supplied 2026-10-18
+
+The following is a compact, semantically equivalent transcription of the **user-supplied** Portainer Compose definition. It is not an independently redeployed test. It uses floating `latest` image tags, so a future pull can differ from the recorded deployment.
+
+```yaml
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: "1000:100"
+    ports: ["8096:8096", "7359:7359/udp"]
+    volumes:
+      - /var/lib/media-stack/jellyfin/config:/config
+      - /var/lib/media-stack/jellyfin/cache:/cache
+      - /mnt/ds3/media/movies:/media/movies:ro
+      - /mnt/ds3/media/shows:/media/shows:ro
+    restart: unless-stopped
+    networks: [media]
+  sabnzbd-media:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd-media
+    environment: [PUID=1000, PGID=100, TZ=Europe/London]
+    ports: ["8081:8080"]
+    volumes:
+      - /var/lib/media-stack/sabnzbd/config:/config
+      - /var/lib/media-stack/sabnzbd/incomplete:/incomplete-downloads
+      - /mnt/ds3/media/downloads:/data/downloads
+    restart: unless-stopped
+    networks: [media]
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment: [PUID=1000, PGID=100, TZ=Europe/London]
+    ports: ["8989:8989"]
+    volumes:
+      - /var/lib/media-stack/sonarr/config:/config
+      - /mnt/ds3/media:/data
+    restart: unless-stopped
+    networks: [media]
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment: [PUID=1000, PGID=100, TZ=Europe/London]
+    ports: ["7878:7878"]
+    volumes:
+      - /var/lib/media-stack/radarr/config:/config
+      - /mnt/ds3/media:/data
+    restart: unless-stopped
+    networks: [media]
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment: [PUID=1000, PGID=100, TZ=Europe/London]
+    ports: ["9696:9696"]
+    volumes:
+      - /var/lib/media-stack/prowlarr/config:/config
+    restart: unless-stopped
+    networks: [media]
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    init: true
+    environment: [TZ=Europe/London, PORT=5055]
+    ports: ["5055:5055"]
+    volumes:
+      - /var/lib/media-stack/seerr/config:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+    security_opt: [no-new-privileges]
+    cap_drop: [ALL]
+    restart: unless-stopped
+    networks: [media]
+networks:
+  media:
+    name: media
+    driver: bridge
+```
+
+### Actual project location and related stacks
+
+The supplied `docker compose ls --all` output reports the running `media` project with **six services** and configuration at `/data/compose/6/docker-compose.yml`. Separate projects exist for `plex` (`/data/compose/7/docker-compose.yml`), `sabnzbd` (`/data/compose/4/docker-compose.yml`), and `sillytavern` (`/data/compose/1/docker-compose.yml`). Those other Compose definitions have **not** been supplied; do not assume they share the `media` network.
+
+### Actual host-to-container storage map
+
+| Service | Bind mounts |
+| --- | --- |
+| Jellyfin | `/var/lib/media-stack/jellyfin/config:/config`; `/var/lib/media-stack/jellyfin/cache:/cache`; DS3 movies → `/media/movies:ro`; DS3 shows → `/media/shows:ro` |
+| SABnzbd-media | `/var/lib/media-stack/sabnzbd/config:/config`; `/var/lib/media-stack/sabnzbd/incomplete:/incomplete-downloads`; `/mnt/ds3/media/downloads:/data/downloads` |
+| Sonarr | `/var/lib/media-stack/sonarr/config:/config`; `/mnt/ds3/media:/data` |
+| Radarr | `/var/lib/media-stack/radarr/config:/config`; `/mnt/ds3/media:/data` |
+| Prowlarr | `/var/lib/media-stack/prowlarr/config:/config` |
+| Seerr | `/var/lib/media-stack/seerr/config:/app/config` |
+
+The `media` network is a named Docker bridge network. For SABnzbd, `8081` is the **host** port; `8080` is the **container** port. Other containers on the same network should use the container's service name and container port where configured. See [[Hermes Media Stack - SABnzbd Download Pipeline]].
