@@ -87,3 +87,7 @@ The running Compose project inventory reports `media running(6)`, `plex running(
 The supplied live `findmnt` confirms DS3 media on `10.10.0.252:/volume1/media` and DS2 main on `10.10.0.253:/volume1/main`. The user subsequently confirmed the DS3 media mount is operational and can list the populated movie, show and download directories; no action is required merely because of the automount unit state.
 
 This is a **configuration/state snapshot**, not proof that every application-level integration test was rerun on 2026-10-18.
+
+## Operational evidence — recent successful imports (user confirmation)
+
+The operator confirms that numerous new movies and television shows have been added successfully through the running stack recently. This is evidence of the download-to-library workflow working in normal operation, not merely passing an API connectivity test. A separate synthetic end-to-end download is therefore **not required to establish that the current pipeline works**. The exact SABnzbd category definitions and Seerr approval policy remain undocumented; their absence from this record does not imply a malfunction.
