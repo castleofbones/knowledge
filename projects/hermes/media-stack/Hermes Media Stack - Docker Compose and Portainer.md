@@ -10,7 +10,7 @@ tags:
   - container-management
 ---
 
-# Deploying the Hermes Media Stack with Docker Compose and Portainer
+# Hermes Docker and Portainer Deployment — Known Configuration and Reconstruction
 
 ## Scope
 
@@ -75,3 +75,20 @@ A successful host-side NFS mount does **not** prove that an already-running cont
 ## Outstanding evidence
 
 Recover the original Compose files and current Portainer stack exports to convert this from a documented reconstruction procedure into a fully reproducible, tested deployment runbook.
+
+## Inspect Compose provenance, rather than guessing a manifest
+
+Docker Compose-managed containers often carry the labels `com.docker.compose.project`, `com.docker.compose.service`, and `com.docker.compose.project.config_files`. Query these labels to locate the actual source where available:
+
+```bash
+docker ps -a --format 'table {{.Names}}\t{{.Label "com.docker.compose.project"}}\t{{.Label "com.docker.compose.service"}}'
+docker inspect sonarr --format '{{json .Config.Labels}}'
+docker inspect sonarr --format '{{json .Mounts}}'
+docker inspect sonarr --format '{{json .NetworkSettings.Networks}}'
+```
+
+Absence of Compose labels may mean a service was created directly by Portainer or Docker rather than by Compose. Even when labels exist, they do not guarantee that the source file remains available. A verified Compose definition should include exact images, UID/GID, restart policies, mapped ports, named networks, config/data bindings, health checks and dependency behaviour.
+
+**Do not publish** raw `docker inspect` dumps containing tokens, passwords, endpoints or other secrets. Sanitise before committing to the vault.
+
+See [[Hermes Media Stack - Architecture and Deployment]] for component roles and [[Hermes Media Stack - Operational Validation Runbook]] for post-deploy acceptance.
