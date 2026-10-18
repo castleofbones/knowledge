@@ -22,12 +22,12 @@ Hermes is a Raspberry Pi 5 (16 GB) running Debian 13 (Trixie) and hosting a cont
 | --- | --- | --- |
 | Container management | Portainer CE | HTTPS UI on port 9443 |
 | Media playback | Jellyfin | TCP 8096; UDP 7359; TV playback verified |
-| Additional media server | Plex | Deployment and even current presence not independently confirmed in available source history |
+| Additional media server | Plex | Separate running Compose project confirmed; configuration not supplied |
 | TV automation | Sonarr | TCP 8989 |
 | Film automation | Radarr | TCP 7878 |
-| Indexer management | Prowlarr | Linked to Sonarr and Radarr |
-| Downloading | SABnzbd | Media instance on TCP 8080; separate existing instance also present |
-| Media requests | Seerr/Overseerr | Historical Overseerr service used port 5055; current Seerr deployment not independently verified |
+| Indexer management | Prowlarr | Host port 9696; linked to Sonarr and Radarr |
+| Downloading | SABnzbd | Media instance host port 8081 → container 8080; separate SABnzbd project exists |
+| Media requests | Seerr | Confirmed `ghcr.io/seerr-team/seerr:latest` in the six-service media Compose project, host port 5055 |
 | Other workloads | Scrypted, SillyTavern | Hosted alongside media services; not part of the core media acquisition path |
 
 ## Storage and network boundaries
@@ -47,7 +47,7 @@ The media library includes `/mnt/ds3/media/movies` and `/mnt/ds3/media/shows`. A
 1. Prowlarr manages indexers and propagates them to Sonarr/Radarr.
 2. Sonarr and Radarr manage requested series and films and communicate with SABnzbd.
 3. SABnzbd uses Pi SSD storage for incomplete work, with completed material destined for NAS storage.
-4. Jellyfin serves NAS media; Plex coexistence was previously discussed but its actual deployment requires confirmation.
+4. Jellyfin serves NAS media; a separate running Plex Compose project is confirmed, but its library configuration is not yet supplied.
 
 The exact completed-download path mappings, category names and import strategy must be read from live service configuration before reproducing the deployment.
 
@@ -76,3 +76,20 @@ Cross-filesystem transfers can behave differently from a same-filesystem rename 
 For a reproducible build, collect the Portainer stack definitions or original Compose files, NAS mount units/`fstab` entries, the actual Docker volume targets and networks, and non-secret application settings. Keep live API keys and credentials out of the vault.
 
 Related notes: [[Hermes Media Stack - Docker Compose and Portainer]], [[Hermes Media Stack - Synology NFS Storage]], [[Hermes Media Stack - SABnzbd Download Pipeline]], [[Hermes Media Stack - Operational Validation Runbook]].
+
+## Verified 2026-10-18 media project configuration
+
+The user supplied the actual six-service `media` Compose definition. All six services share a named bridge network `media`:
+
+| Service | Image | Host → container port |
+| --- | --- | --- |
+| Jellyfin | `jellyfin/jellyfin:latest` | 8096 → 8096/tcp; 7359 → 7359/udp |
+| SABnzbd-media | `lscr.io/linuxserver/sabnzbd:latest` | **8081 → 8080/tcp** |
+| Sonarr | `lscr.io/linuxserver/sonarr:latest` | 8989 → 8989/tcp |
+| Radarr | `lscr.io/linuxserver/radarr:latest` | 7878 → 7878/tcp |
+| Prowlarr | `lscr.io/linuxserver/prowlarr:latest` | 9696 → 9696/tcp |
+| Seerr | `ghcr.io/seerr-team/seerr:latest` | 5055 → 5055/tcp |
+
+Portainer's Compose project inventory also confirms separate running `plex` and `sabnzbd` projects, plus `sillytavern`. These are **not** part of the six-service `media` Compose project.
+
+See [[Hermes Media Stack - Docker Compose and Portainer]] for the supplied Compose definition and bind-mount table.
