@@ -51,7 +51,7 @@ docker logs --tail 100 sonarr
 docker logs --tail 100 radarr
 ```
 
-The Compose definition confirms Prowlarr host port **9696** and the shared `media` bridge network. The exact indexer list and application URL fields remain to be retrieved from Prowlarr.
+The Compose definition confirms Prowlarr host port **9696** and the shared `media` bridge network. The live application URLs and configured indexer are recorded below.
 
 ## Integration lessons
 
@@ -70,3 +70,19 @@ See [[Hermes Media Stack - SABnzbd Download Pipeline]] for the storage split and
 ## Confirmed deployment service
 
 The 2026-10-18 `media` Compose definition deploys `lscr.io/linuxserver/prowlarr:latest` as `prowlarr`, exposes **9696:9696**, stores configuration at `/var/lib/media-stack/prowlarr/config:/config`, sets PUID 1000, PGID 100 and Europe/London timezone, and joins the shared `media` bridge network. This confirms the container's networking and persistence; application API URLs, indexer definitions and sync settings must still be read from Prowlarr itself.
+
+## Verified live application integrations (2026-10-18)
+
+A consistent read-only snapshot of `prowlarr.db` confirms the following configured applications and indexer (credentials omitted):
+
+| Integration | Value |
+| --- | --- |
+| Sonarr application | `http://sonarr:8989`, `SyncLevel=2` |
+| Radarr application | `http://radarr:7878`, `SyncLevel=2` |
+| Enabled indexer | `NzbPlanet` (`Newznab`, `AppProfileId=1`) |
+| Sync profile | `Standard` |
+| Standard profile RSS | Enabled |
+| Standard profile interactive search | Enabled |
+| Standard profile automatic search | Enabled |
+
+Sonarr and Radarr each have a synced `NzbPlanet (Prowlarr)` Newznab indexer with RSS enabled. The numeric `SyncLevel=2` is preserved as observed rather than assigning an unverified UI label. These records establish configured integrations; they do not prove that a new search succeeds at this moment.
