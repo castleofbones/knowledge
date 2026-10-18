@@ -66,3 +66,7 @@ Prowlarr was added and linked to Sonarr/Radarr; the media automation tests passe
 For each Prowlarr application integration, record its **non-secret** endpoint URL, sync profile, categories and test result. For each Sonarr/Radarr download client, separately record the host/port, category and tested status. API keys belong in the live secret/configuration store, not the vault.
 
 See [[Hermes Media Stack - SABnzbd Download Pipeline]] for the storage split and [[Hermes Media Stack - Sonarr and Radarr Configuration]] for root-folder/import ownership.
+
+## Confirmed deployment service
+
+The 2026-10-18 `media` Compose definition deploys `lscr.io/linuxserver/prowlarr:latest` as `prowlarr`, exposes **9696:9696**, stores configuration at `/var/lib/media-stack/prowlarr/config:/config`, sets PUID 1000, PGID 100 and Europe/London timezone, and joins the shared `media` bridge network. This confirms the container's networking and persistence; application API URLs, indexer definitions and sync settings must still be read from Prowlarr itself.
