@@ -51,7 +51,7 @@ docker logs --tail 100 sonarr
 docker logs --tail 100 radarr
 ```
 
-The exact Prowlarr port, Docker network name, indexer list and application URL fields were not captured in the accessible history.
+The Compose definition confirms Prowlarr host port **9696** and the shared `media` bridge network. The exact indexer list and application URL fields remain to be retrieved from Prowlarr.
 
 ## Integration lessons
 
