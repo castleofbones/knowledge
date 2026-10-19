@@ -7,6 +7,7 @@ tags:
   - obsidian
   - knowledge-management
   - metadata
+purpose: knowledge
 ---
 # Article Metadata Conventions
 ## Purpose

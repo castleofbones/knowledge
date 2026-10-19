@@ -8,6 +8,7 @@ tags:
   - download-automation
   - ssd
   - synology-nas
+purpose: knowledge
 ---
 
 # Setting Up SABnzbd with SSD-Based Incomplete Downloads

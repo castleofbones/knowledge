@@ -1,1 +1,4 @@
+---
+purpose: review
+---
 New notes should automatically appear in `00-inbox` without requiring me to choose a destination.

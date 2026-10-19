@@ -8,6 +8,7 @@ tags:
   - docker
   - media-server
   - synology-nas
+purpose: knowledge
 ---
 
 # Deploying Plex Alongside Jellyfin on Hermes

@@ -21,6 +21,7 @@ tags:
 - image-generation
     
 
+purpose: knowledge
 ---
 ## Overview
 

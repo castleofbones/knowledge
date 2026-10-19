@@ -12,6 +12,7 @@ tags:
   - reusable-components
   - debugging
   - krea-2
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > Subgraphs allow complex ComfyUI workflows to be organised into reusable components with defined inputs and outputs.

@@ -19,6 +19,7 @@ tags:
 - image-generation
     
 
+purpose: knowledge
 ---
 ## Decision summary
 

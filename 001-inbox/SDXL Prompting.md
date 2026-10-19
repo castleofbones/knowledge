@@ -17,6 +17,7 @@ tags:
 - image-generation
     
 
+purpose: knowledge
 ---
 Stable Diffusion XL (SDXL) is a latent diffusion image-generation architecture developed by Stability AI. SDXL Base 1.0 and checkpoints derived from it can generate images from natural-language descriptions, keyword-based prompts, or combinations of both.
 

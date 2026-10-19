@@ -10,6 +10,7 @@ tags:
   - sillytavern
   - ollama
   - max-tokens
+purpose: knowledge
 ---
 ## Overview
 

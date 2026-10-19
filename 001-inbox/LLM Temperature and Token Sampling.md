@@ -9,6 +9,7 @@ tags:
   - temperature
   - sillytavern
   - inference-settings
+purpose: knowledge
 ---
 ## Overview
 

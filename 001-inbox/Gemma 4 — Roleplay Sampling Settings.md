@@ -19,6 +19,7 @@ tags:
 - inference-configuration
     
 
+purpose: knowledge
 ---
 ## Overview
 

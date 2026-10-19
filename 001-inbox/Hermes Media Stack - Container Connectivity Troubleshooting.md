@@ -8,6 +8,7 @@ tags:
   - sabnzbd
   - sonarr
   - radarr
+purpose: knowledge
 ---
 
 # Troubleshooting Hermes Media Stack Container Connectivity

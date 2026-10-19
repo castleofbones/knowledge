@@ -13,6 +13,7 @@ tags:
   - storyboarding
   - compositing
   - video-editing
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > This article describes a practical, shot-based approach to producing short films using AI-generated images and video.

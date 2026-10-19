@@ -11,6 +11,7 @@ tags:
   - comfyui
   - local-ai
   - msty
+purpose: knowledge
 ---
 ## Overview
 

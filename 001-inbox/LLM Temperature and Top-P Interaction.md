@@ -10,6 +10,7 @@ tags:
   - top-p
   - sillytavern
   - inference-settings
+purpose: knowledge
 ---
 ## Overview
 

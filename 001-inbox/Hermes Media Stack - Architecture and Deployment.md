@@ -8,6 +8,7 @@ tags:
   - docker
   - media-server
   - synology-nas
+purpose: knowledge
 ---
 
 # Hermes Media Stack — Architecture and Deployment

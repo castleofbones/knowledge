@@ -10,6 +10,7 @@ tags:
   - diffusion
   - textual-inversion
   - lora
+purpose: knowledge
 ---
 > [!abstract] Purpose  
 > Understand the underlying principles of diffusion-based image generation, how Stable Diffusion WebUI Forge and ComfyUI expose those principles, and how prompts, embeddings, LoRAs, checkpoints and other components interact.

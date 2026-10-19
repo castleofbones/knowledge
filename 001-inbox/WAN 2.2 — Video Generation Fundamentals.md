@@ -21,6 +21,7 @@ tags:
 - ai-filmmaking
     
 
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > WAN 2.2 is a generative video model family capable of producing moving images from text and/or image conditioning. This article introduces the principles behind video generation, focusing on the WAN 2.2 A14B image-to-video architecture, its two noise experts, sampling, acceleration, performance and practical limitations.

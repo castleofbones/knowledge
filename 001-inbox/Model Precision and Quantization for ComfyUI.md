@@ -17,6 +17,7 @@ tags:
 - gpu-memory
     
 
+purpose: knowledge
 ---
 ## Overview
 

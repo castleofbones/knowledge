@@ -8,6 +8,7 @@ tags:
   - radarr
   - sabnzbd
   - media-library
+purpose: knowledge
 ---
 
 # Configuring Sonarr and Radarr Library Management

@@ -23,6 +23,7 @@ tags:
 - ai-filmmaking
     
 
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > This article documents our implementation of **WAN 2.2 A14B Image-to-Video (I2V)** in ComfyUI Desktop, including its dual-expert model architecture, high/low-noise sampling stages, LightX2V acceleration, native/Turbo switching, latent handover and practical troubleshooting.

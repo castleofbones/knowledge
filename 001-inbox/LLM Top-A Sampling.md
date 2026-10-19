@@ -17,6 +17,7 @@ tags:
 - text-generation
     
 
+purpose: knowledge
 ---
 
 # Top-A Sampling in Large Language Models

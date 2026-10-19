@@ -21,6 +21,7 @@ tags:
 - context-management
     
 
+purpose: knowledge
 ---
 ## Purpose
 

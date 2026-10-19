@@ -21,6 +21,7 @@ tags:
 - context-window
     
 
+purpose: knowledge
 ---
 ## Purpose
 

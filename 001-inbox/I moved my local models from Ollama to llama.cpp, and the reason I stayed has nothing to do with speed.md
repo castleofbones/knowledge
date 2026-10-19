@@ -5,6 +5,7 @@ published: 2026-10-15
 created: 2026-10-18
 tags:
   - clippings
+purpose: explore
 ---
 Ever since I started hosting local AI models, Ollama has been my default way to run them. For the longest time, it gave me absolutely no room to complain, and I'd wager for most beginners that would be the case. It's not lost on me that [local AI inference does seem to have a pressing friction problem](https://www.xda-developers.com/the-biggest-thing-holding-local-ai-back-isnt-model-quality-its-friction/), and that a clean GUI like Ollama's doesn't make you work too hard and is therefore less likely to push you back to cloud alternatives by taking care of the problems for you.
 
