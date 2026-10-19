@@ -10,6 +10,7 @@ tags:
   - sillytavern
   - token-sampling
   - inference-settings
+purpose: knowledge
 ---
 ## Overview
 

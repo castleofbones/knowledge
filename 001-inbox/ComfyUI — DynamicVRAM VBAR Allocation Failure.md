@@ -10,6 +10,7 @@ tags:
   - nvidia-cuda
   - memory-management
   - windows-11
+purpose: knowledge
 ---
 ## Overview
 

@@ -11,6 +11,7 @@ tags:
   - inpainting
   - denoise
   - krea-2
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > **Image-to-image (img2img)** and **inpainting** both use an existing image as the starting point for diffusion. The fundamental difference is how much of the image is eligible for modification.

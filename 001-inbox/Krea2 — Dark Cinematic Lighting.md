@@ -10,6 +10,7 @@ tags:
   - image-generation
   - photography
   - comfyui
+purpose: knowledge
 ---
 ## Overview
 

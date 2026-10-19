@@ -13,6 +13,7 @@ tags:
   - illustrious
   - character-design
   - workflow
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > Effective prompting is not simply about finding more descriptive words. It is about communicating a visual specification in a form the image-generation model can interpret.

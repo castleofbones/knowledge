@@ -14,6 +14,7 @@ tags:
   - sam
   - inpainting
   - krea-2
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > Automated detailing uses object detection, optional segmentation, and targeted diffusion processing to improve selected regions of a generated image.

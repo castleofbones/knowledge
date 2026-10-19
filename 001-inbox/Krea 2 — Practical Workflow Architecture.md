@@ -14,6 +14,7 @@ tags:
   - inpainting
   - detailing
   - reproducibility
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > This article documents the modular Krea 2 image-generation workflow developed through practical experimentation in ComfyUI Desktop.

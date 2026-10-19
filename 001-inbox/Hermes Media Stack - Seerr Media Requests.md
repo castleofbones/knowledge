@@ -8,6 +8,7 @@ tags:
   - overseerr
   - docker
   - media-requests
+purpose: knowledge
 ---
 
 # Seerr on Hermes — Confirmed Deployment and Historical Overseerr Context

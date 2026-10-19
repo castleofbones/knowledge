@@ -10,6 +10,7 @@ tags:
   - benchmarking
   - vram
   - gpu
+purpose: knowledge
 ---
 ## Overview
 

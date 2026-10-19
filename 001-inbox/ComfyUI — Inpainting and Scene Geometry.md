@@ -25,6 +25,7 @@ tags:
 - ai-filmmaking
     
 
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > Inpainting allows selected regions of an existing image to be regenerated while preserving surrounding content.

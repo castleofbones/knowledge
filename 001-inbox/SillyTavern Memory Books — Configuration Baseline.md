@@ -17,6 +17,7 @@ tags:
 - openrouter
     
 
+purpose: knowledge
 ---
 ## Purpose
 

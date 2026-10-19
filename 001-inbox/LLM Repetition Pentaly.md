@@ -10,6 +10,7 @@ tags:
   - sillytavern
   - text-generation
   - inference-settings
+purpose: knowledge
 ---
 ## Overview
 

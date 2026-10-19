@@ -14,6 +14,7 @@ tags:
   - comfyui-easy-use
   - impact-pack
   - krea-2
+purpose: knowledge
 ---
 
 > [!abstract] Overview  

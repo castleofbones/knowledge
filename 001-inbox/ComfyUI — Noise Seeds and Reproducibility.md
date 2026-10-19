@@ -9,6 +9,7 @@ tags:
   - noise-seeds
   - latent-space
   - reproducibility
+purpose: knowledge
 ---
 ## Overview
 

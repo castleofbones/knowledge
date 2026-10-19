@@ -8,6 +8,7 @@ tags:
   - sonarr
   - radarr
   - indexers
+purpose: knowledge
 ---
 
 # Prowlarr Integration with Sonarr and Radarr on Hermes

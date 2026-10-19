@@ -8,6 +8,7 @@ tags:
   - docker
   - container-upgrades
   - raspberry-pi
+purpose: knowledge
 ---
 
 # Portainer CE on Hermes — Verified Maintenance Pattern

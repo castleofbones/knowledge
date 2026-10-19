@@ -6,6 +6,7 @@ source:
 tags:
   - obsidian
   - knowledge-management
+purpose: knowledge
 ---
 ## Purpose
 

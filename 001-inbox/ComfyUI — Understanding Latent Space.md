@@ -10,6 +10,7 @@ tags:
   - latent-space
   - vae
   - krea-2
+purpose: knowledge
 ---
 > [!abstract] Overview  
 > ComfyUI image-generation workflows operate with two fundamentally different representations of an image: **pixel images** and **latent representations**. Understanding the distinction explains why samplers, VAE encoders, VAE decoders, inpainting and image-to-image generation work the way they do.

@@ -19,6 +19,7 @@ tags:
 - photography
     
 
+purpose: knowledge
 ---
 ## Overview
 

@@ -21,6 +21,7 @@ tags:
 - reasoning
     
 
+purpose: knowledge
 ---
 ## Purpose
 

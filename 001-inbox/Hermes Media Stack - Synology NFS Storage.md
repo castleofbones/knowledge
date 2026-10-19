@@ -8,6 +8,7 @@ tags:
   - nfs
   - docker
   - linux-storage
+purpose: knowledge
 ---
 
 # Configuring Synology NFS Storage for Hermes Media Services

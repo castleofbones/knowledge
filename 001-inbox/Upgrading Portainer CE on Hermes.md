@@ -17,6 +17,7 @@ tags:
 - shell-scripting
     
 
+purpose: knowledge
 ---
 ## Overview
 

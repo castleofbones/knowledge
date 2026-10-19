@@ -11,6 +11,7 @@ tags:
   - inference-configuration
   - sillytavern
   - ollama
+purpose: knowledge
 ---
 ## Purpose
 

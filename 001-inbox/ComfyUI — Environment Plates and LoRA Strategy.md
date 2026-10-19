@@ -12,6 +12,7 @@ tags:
   - compositing
   - character-consistency
   - ai-filmmaking
+purpose: knowledge
 ---
 > [!abstract] Overview
 > This article documents a practical strategy for building reusable characters and environments for AI-generated filmmaking using ComfyUI.

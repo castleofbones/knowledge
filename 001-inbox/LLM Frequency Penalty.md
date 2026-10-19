@@ -10,6 +10,7 @@ tags:
   - sillytavern
   - roleplay
   - inference-settings
+purpose: knowledge
 ---
 ## Overview
 

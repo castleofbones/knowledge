@@ -10,6 +10,7 @@ tags:
   - image-generation
   - model-conditioning
   - diffusion-models
+purpose: knowledge
 ---
 ## Overview
 

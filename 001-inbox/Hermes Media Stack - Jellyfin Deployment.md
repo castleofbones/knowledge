@@ -8,6 +8,7 @@ tags:
   - raspberry-pi
   - docker
   - media-playback
+purpose: knowledge
 ---
 
 # Jellyfin on Hermes — Verified Deployment and Playback

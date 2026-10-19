@@ -8,6 +8,7 @@ tags:
   - portainer
   - raspberry-pi
   - container-management
+purpose: knowledge
 ---
 
 # Hermes Docker and Portainer Deployment — Known Configuration and Reconstruction
